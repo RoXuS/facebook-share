@@ -1,0 +1,6 @@
+bower_components/
+build/
+node_modules/
+/locales.json
+/cert.pem
+/key.pem

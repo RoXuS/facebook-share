@@ -1,0 +1,57 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<link rel="import" href="facebook-sdk-import.html">
+
+<dom-module id="facebook-share">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div on-click="share">
+      <slot></slot>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * `facebook-share`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class FacebookShare extends Polymer.Element {
+      static get is() { return 'facebook-share'; }
+      static get properties() {
+        return {
+          appId: {
+            type: String,
+            observer: '_appIdChanged',
+          },
+          url: String,
+        };
+      }
+
+      _appIdChanged(appId)  {
+        FB.init({
+          appId,
+          autoLogAppEvents: true,
+          xfbml: true,
+          version: 'v2.10'
+        });
+      }
+
+      share() {
+        FB.ui({
+          method: 'share',
+          href: this.url,
+        }, function (response) { });
+      }
+    }
+
+    window.customElements.define(FacebookShare.is, FacebookShare);
+  </script>
+</dom-module>
